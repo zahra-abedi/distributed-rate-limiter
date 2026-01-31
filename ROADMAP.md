@@ -4,12 +4,11 @@ This roadmap outlines the development plan for the Distributed Rate Limiter proj
 
 ## Project Status: 🚧 In Active Development
 
-**Current Version:** v0.1.0-alpha
-**Target Release:** v1.0.0 (February 2026)
+**Current Version:** v0.2.0-alpha
 
 ---
 
-## ✅ v0.1.0 - Core Interface & Design (Completed: Jan 30, 2026)
+## ✅ v0.1.0 - Core Interface & Design (Completed)
 
 Foundation work: interface design, documentation, and testing framework.
 
@@ -38,6 +37,12 @@ Foundation work: interface design, documentation, and testing framework.
   - Architecture Decision Records (3 ADRs)
   - Code examples (EXAMPLES.md)
 
+- [x] **CI/CD Pipeline**
+  - GitHub Actions workflow
+  - Automated testing (unit + integration)
+  - golangci-lint integration
+  - Go 1.25 support
+
 ### Key Decisions Made
 
 See [docs/ADR/](docs/ADR/) for detailed decision records:
@@ -47,31 +52,35 @@ See [docs/ADR/](docs/ADR/) for detailed decision records:
 
 ---
 
-## 🚧 v0.2.0 - Core Algorithms (In Progress: Jan 30 - Feb 2, 2026)
+## 🚧 v0.2.0 - Core Algorithms (In Progress)
 
-Algorithm implementations with in-memory storage (no Redis dependency yet).
+Algorithm implementations with Redis backend.
 
-### Planned Features
+**Implementation Note:** Originally planned to implement in-memory storage first, then migrate to Redis in v0.3.0. Changed approach to implement Redis-backed algorithms from the start for better production readiness and to avoid duplicate work.
 
-- [ ] **Fixed Window Counter Algorithm**
-  - In-memory implementation with sync.Map
-  - Unit tests using InterfaceTestSuite
-  - Algorithm-specific tests (boundary behavior)
-  - Benchmark tests
-  - **Target:** Feb 1, 2026
+### Features
 
-- [ ] **Token Bucket Algorithm**
-  - In-memory implementation
-  - Refill rate calculations
-  - Float precision handling
-  - Unit and benchmark tests
-  - **Target:** Feb 2, 2026
+- [x] **Fixed Window Counter Algorithm**
+  - Redis-backed implementation with Lua scripts
+  - Atomic INCR + EXPIRE operations
+  - Unit tests for validation and edge cases
+  - Integration tests with miniredis
+  - Fail-open/fail-closed behavior
+  - 96.2% test coverage
+  - ⚠️ Benchmark tests pending
 
 - [ ] **Sliding Window Counter Algorithm**
-  - In-memory implementation
+  - Redis-backed implementation
   - Weighted average calculations
-  - Unit and benchmark tests
-  - **Target:** Feb 2, 2026
+  - Unit and integration tests
+  - Benchmark tests
+
+- [ ] **Token Bucket Algorithm**
+  - Redis-backed implementation
+  - Refill rate calculations
+  - Float precision handling
+  - Unit and integration tests
+  - Benchmark tests
 
 ### Success Criteria
 
@@ -82,46 +91,40 @@ Algorithm implementations with in-memory storage (no Redis dependency yet).
 
 ---
 
-## 📦 v0.3.0 - Redis Integration (Planned: Feb 3-5, 2026)
+## 📦 v0.3.0 - Advanced Redis Features (Planned)
 
-Replace in-memory storage with Redis backend.
+Enhanced Redis integration and production features.
 
 ### Planned Features
 
-- [ ] **Redis Client Setup**
-  - Connection pooling (10 connections default)
-  - Timeout configuration (100ms default)
-  - Automatic reconnection
-  - Error handling
-
-- [ ] **Lua Scripts**
-  - `fixed_window.lua` - Atomic INCR + EXPIRE
-  - `token_bucket.lua` - Atomic read-refill-update
-  - `sliding_window.lua` - Weighted window calculation
-  - Script preloading for performance
-
 - [ ] **Circuit Breaker**
   - Detect Redis failures
-  - Fail-open/fail-closed behavior
   - Automatic recovery
   - Cooldown periods
 
-- [ ] **Integration Tests**
-  - Docker-based Redis for CI
-  - Full end-to-end tests
-  - Concurrency tests (multiple servers)
-  - Failure scenario tests
+- [ ] **Connection Pooling**
+  - Configurable pool size
+  - Timeout configuration
+  - Automatic reconnection
+
+- [ ] **Script Optimization**
+  - Script preloading
+  - Performance tuning
+
+- [ ] **Concurrency Tests**
+  - Multi-server scenarios
+  - Race condition testing
+  - Distributed correctness verification
 
 ### Success Criteria
 
-- All algorithms work with Redis
-- Integration tests pass consistently
 - Circuit breaker prevents cascading failures
 - Performance benchmarks meet targets (30K+ RPS)
+- Concurrency tests pass consistently
 
 ---
 
-## 🌐 v0.4.0 - gRPC Service (Planned: Feb 6-8, 2026)
+## 🌐 v0.4.0 - gRPC Service (Planned)
 
 Language-agnostic gRPC API for the rate limiter.
 
@@ -159,7 +162,7 @@ Language-agnostic gRPC API for the rate limiter.
 
 ---
 
-## 📊 v0.5.0 - Observability (Planned: Feb 9-11, 2026)
+## 📊 v0.5.0 - Observability (Planned)
 
 Production-grade metrics, logging, and monitoring.
 
@@ -196,7 +199,7 @@ Production-grade metrics, logging, and monitoring.
 
 ---
 
-## 🚀 v1.0.0 - Production Ready (Planned: Feb 12-15, 2026)
+## 🚀 v1.0.0 - Production Ready (Planned)
 
 Final polish, deployment tooling, and comprehensive documentation.
 
@@ -207,12 +210,6 @@ Final polish, deployment tooling, and comprehensive documentation.
   - Docker Compose (app + Redis + Prometheus + Grafana)
   - Kubernetes manifests (optional)
   - Helm chart (optional)
-
-- [ ] **CI/CD**
-  - GitHub Actions workflow
-  - Automated testing (unit + integration)
-  - Docker image build and push
-  - Release automation
 
 - [ ] **Documentation**
   - Complete README with quick start
@@ -276,19 +273,6 @@ This project follows [Semantic Versioning](https://semver.org/):
 - **Minor** (v1.0.0 → v1.1.0): New features, backwards compatible
 - **Patch** (v1.0.0 → v1.0.1): Bug fixes, backwards compatible
 
-## Timeline Summary
-
-| Version | Focus | Timeline | Status |
-|---------|-------|----------|--------|
-| v0.1.0 | Interface & Design | Jan 28-30 | ✅ Complete |
-| v0.2.0 | Core Algorithms | Jan 30 - Feb 2 | 🚧 In Progress |
-| v0.3.0 | Redis Integration | Feb 3-5 | 📅 Planned |
-| v0.4.0 | gRPC Service | Feb 6-8 | 📅 Planned |
-| v0.5.0 | Observability | Feb 9-11 | 📅 Planned |
-| v1.0.0 | Production Ready | Feb 12-15 | 📅 Planned |
-
-**Estimated Total Time:** ~3 weeks (Jan 28 - Feb 15, 2026)
-
 ---
 
 ## License
@@ -299,12 +283,3 @@ MIT License - see [LICENSE](LICENSE) for details.
 
 **Zahra Abedi**
 Senior Backend & Software Developer
-
-This project demonstrates:
-- ✅ Distributed systems design
-- ✅ Production-quality Go code
-- ✅ Algorithm implementation and analysis
-- ✅ Testing strategies (unit, integration, benchmarks)
-- ✅ API design (interface-first, decorator pattern)
-- ✅ Documentation (ADRs, architecture docs)
-- ✅ Observability (metrics, logging, tracing)
