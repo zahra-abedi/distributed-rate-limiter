@@ -1,0 +1,27 @@
+version: 2
+
+run:
+  timeout: 5m
+  go: '1.25'
+  tests: false  # Don't lint test files
+
+linters:
+  enable:
+    - errcheck
+    - govet
+    - ineffassign
+    - staticcheck
+    - unused
+    - misspell
+    - revive
+
+linters-settings:
+  errcheck:
+    check-blank: true
+  revive:
+    severity: warning
+
+issues:
+  exclude-use-default: false
+  max-issues-per-linter: 0
+  max-same-issues: 0

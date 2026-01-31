@@ -1,3 +1,4 @@
+// Package main provides the entry point for the distributed rate limiter server.
 package main
 
 import (
