@@ -1,3 +1,4 @@
+// Package ratelimiter provides a distributed rate limiting interface and implementations.
 package ratelimiter
 
 import (
