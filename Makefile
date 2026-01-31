@@ -1,4 +1,4 @@
-.PHONY: help build test test-coverage test-ci vet lint fmt clean deps proto run check
+.PHONY: help build test test-coverage test-ci bench bench-compare vet lint fmt fmt-check clean deps proto run check
 
 # Default target
 .DEFAULT_GOAL := help
@@ -34,6 +34,10 @@ fmt: ## Format code
 	@echo "Formatting code..."
 	@$(GOFMT) ./...
 
+fmt-check: ## Check if code is formatted
+	@echo "Checking code formatting..."
+	@test -z "$$(gofmt -l .)" || (echo "Code is not formatted. Run 'make fmt' to fix." && gofmt -l . && exit 1)
+
 lint: ## Run golangci-lint
 	@echo "Running golangci-lint..."
 	@which golangci-lint > /dev/null || (echo "golangci-lint not installed. Install from https://golangci-lint.run/usage/install/" && exit 1)
@@ -54,7 +58,17 @@ test-ci: ## Run tests for CI (with coverage)
 	@echo "Running tests for CI..."
 	@$(GOTEST) -v -race -coverprofile=coverage.txt -covermode=atomic ./...
 
-check: vet lint test ## Run all checks (vet, lint, test)
+bench: ## Run benchmarks
+	@echo "Running benchmarks..."
+	@$(GOTEST) -bench=. -benchmem -run=^$$ ./...
+
+bench-compare: ## Run benchmarks and save results for comparison
+	@echo "Running benchmarks and saving results..."
+	@$(GOTEST) -bench=. -benchmem -run=^$$ ./... | tee bench-new.txt
+	@echo "Results saved to bench-new.txt"
+	@echo "To compare with previous results, run: benchstat bench-old.txt bench-new.txt"
+
+check: fmt-check vet lint test ## Run all checks (fmt-check, vet, lint, test)
 
 build: ## Build the server binary
 	@echo "Building $(BINARY_NAME)..."

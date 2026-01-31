@@ -115,10 +115,13 @@ make test
 # Run tests with coverage report
 make test-coverage
 
+# Run benchmarks
+make bench
+
 # Run linter
 make lint
 
-# Run all checks (vet + lint + test)
+# Run all checks (fmt-check + vet + lint + test)
 make check
 
 # Build the server
