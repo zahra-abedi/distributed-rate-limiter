@@ -35,3 +35,7 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Internal/Working Documents (not for public repo)
+PROGRESS.md
+docs/RECOMMENDATIONS.md
