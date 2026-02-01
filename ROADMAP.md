@@ -76,12 +76,15 @@ Algorithm implementations with Redis backend.
   - Benchmark tests (12 scenarios)
   - Fail-open/fail-closed behavior
 
-- [ ] **Token Bucket Algorithm**
-  - Redis-backed implementation
-  - Refill rate calculations
-  - Float precision handling
-  - Unit and integration tests
-  - Benchmark tests
+- [x] **Token Bucket Algorithm**
+  - Redis-backed implementation with Lua scripts
+  - Continuous token refill with float precision
+  - Atomic refill + consume operations
+  - Unit tests for refill rate calculations
+  - Integration tests with miniredis (14 scenarios)
+  - Benchmark tests (12 scenarios)
+  - Fail-open/fail-closed behavior
+  - Burst allowance support
 
 ### Success Criteria
 
