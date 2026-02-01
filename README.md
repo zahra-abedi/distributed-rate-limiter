@@ -66,7 +66,7 @@ import (
     "context"
     "time"
 
-    "github.com/zahraabedi/distributed-rate-limiter/internal/ratelimiter"
+    "github.com/zahra-abedi/distributed-rate-limiter/internal/ratelimiter"
 )
 
 func main() {
