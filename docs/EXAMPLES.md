@@ -11,8 +11,8 @@ import (
     "log"
     "net/http"
 
-    "github.com/zahraabedi/distributed-rate-limiter/pkg/client"
-    "github.com/zahraabedi/distributed-rate-limiter/internal/ratelimiter"
+    "github.com/zahra-abedi/distributed-rate-limiter/pkg/client"
+    "github.com/zahra-abedi/distributed-rate-limiter/internal/ratelimiter"
 )
 
 func main() {
@@ -94,7 +94,7 @@ import (
     "context"
     "time"
 
-    "github.com/zahraabedi/distributed-rate-limiter/internal/ratelimiter"
+    "github.com/zahra-abedi/distributed-rate-limiter/internal/ratelimiter"
 )
 
 type AuthService struct {
@@ -170,7 +170,7 @@ import (
     "context"
     "time"
 
-    "github.com/zahraabedi/distributed-rate-limiter/internal/ratelimiter"
+    "github.com/zahra-abedi/distributed-rate-limiter/internal/ratelimiter"
 )
 
 type Tier string
@@ -274,7 +274,7 @@ package batch
 
 import (
     "context"
-    "github.com/zahraabedi/distributed-rate-limiter/internal/ratelimiter"
+    "github.com/zahra-abedi/distributed-rate-limiter/internal/ratelimiter"
 )
 
 type BatchProcessor struct {
@@ -329,7 +329,7 @@ User uploads 40 files instead → SUCCESS
 package main
 
 import (
-    "github.com/zahraabedi/distributed-rate-limiter/internal/ratelimiter"
+    "github.com/zahra-abedi/distributed-rate-limiter/internal/ratelimiter"
 )
 
 func setupRateLimiters(redis *redis.Client) {
@@ -393,8 +393,8 @@ import (
     "testing"
     "time"
 
-    "github.com/zahraabedi/distributed-rate-limiter/internal/ratelimiter"
-    "github.com/zahraabedi/distributed-rate-limiter/internal/ratelimiter/mocks"
+    "github.com/zahra-abedi/distributed-rate-limiter/internal/ratelimiter"
+    "github.com/zahra-abedi/distributed-rate-limiter/internal/ratelimiter/mocks"
 )
 
 func TestRateLimiter_AllowsUpToLimit(t *testing.T) {
