@@ -66,14 +66,15 @@ Algorithm implementations with Redis backend.
   - Unit tests for validation and edge cases
   - Integration tests with miniredis
   - Fail-open/fail-closed behavior
-  - 96.2% test coverage
-  - ⚠️ Benchmark tests pending
+  - Benchmark tests (11 scenarios)
 
-- [ ] **Sliding Window Counter Algorithm**
-  - Redis-backed implementation
-  - Weighted average calculations
-  - Unit and integration tests
-  - Benchmark tests
+- [x] **Sliding Window Counter Algorithm**
+  - Redis-backed implementation with Lua scripts
+  - Weighted average calculations for smooth rate limiting
+  - Unit tests for weighted count logic
+  - Integration tests with miniredis
+  - Benchmark tests (12 scenarios)
+  - Fail-open/fail-closed behavior
 
 - [ ] **Token Bucket Algorithm**
   - Redis-backed implementation
